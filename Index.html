@@ -1,0 +1,441 @@
+<!DOCTYPE html by LMX>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        premium: {
+                            bg: '#0b0c0f',
+                            border: '#1c1f24',
+                            accent: '#4f46e5', // indigo-600
+                        }
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            /* Desplazamiento para navbar fija */
+            scroll-padding-top: 80px; 
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0c0f;
+            color: #f3f4f6; /* neutral-100 */
+        }
+        /* Estado inicial de revelado al hacer scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            filter: blur(5px);
+            transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        /* Fondo animado del hero */
+        @keyframes mesh-background-animate {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+        .mesh-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150vw;
+            height: 150vh;
+            background-image: 
+                radial-gradient(at 10% 10%, #312e81 0px, transparent 50%),
+                radial-gradient(at 90% 10%, #1e1b4b 0px, transparent 50%),
+                radial-gradient(at 90% 90%, #1e40af 0px, transparent 50%),
+                radial-gradient(at 10% 90%, #312e81 0px, transparent 50%);
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: mesh-background-animate 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animación de gradiente en texto */
+        @keyframes text-gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-text-gradient {
+            background-image: linear-gradient(90deg, #f3f4f6 0%, #a1a1aa 50%, #f3f4f6 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-gradient-shift 10s infinite linear;
+        }
+
+        /* Animación flotante */
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-icon {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        /* Efectos hover de tarjetas */
+        .premium-card {
+            background-color: rgba(28, 31, 36, 0.4);
+            border: 1px solid #1c1f24;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .premium-card:hover {
+            border-color: #3f3f46;
+            background-color: rgba(28, 31, 36, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.2);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-neutral-950/70 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                LMX
+            </a>
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#projects" class="text-sm font-medium text-neutral-300 hover:text-white transition">Proyectos</a>
+                <a href="#services" class="text-sm font-medium text-neutral-300 hover:text-white transition">Servicios</a>
+                <a href="#about" class="text-sm font-medium text-neutral-300 hover:text-white transition">Sobre mí</a>
+                <a href="#contact" class="text-sm font-medium text-neutral-300 hover:text-white transition">Contacto</a>
+            </div>
+            <a href="#contact" class="inline-flex items-center gap-2 text-sm font-medium px-6 py-2.5 rounded-full border border-neutral-700 hover:border-neutral-500 text-white transition">
+                Hablemos
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M11 11V1H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[100vh] flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden">
+        <div class="mesh-background"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-indigo-950/50 border border-indigo-800 text-xs font-semibold text-indigo-300 tracking-wide mb-8">
+                DESARROLLO WEB INDEPENDIENTE 
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-[0.95] animated-text-gradient">
+                Experiencias digitales de alto rendimiento para empresas modernas.
+            </h1>
+            <p class="text-lg md:text-xl text-neutral-400 font-medium mb-12 leading-relaxed max-w-2xl mx-auto">
+                Desarrollador web independiente enfocado en sitios modernos, escalables y orientados a conversiones.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="#projects" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-base font-semibold px-10 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition-all transform hover:-translate-y-0.5">
+                    Ver proyectos
+                    <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 11L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11 11V1H1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/+573024320955" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 text-base font-semibold px-10 py-4 rounded-xl border border-neutral-700 hover:border-neutral-500 text-white transition">
+                    Contacto por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="premium-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-full bg-indigo-950/50 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-8 float-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Rendimiento primero</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Código optimizado, tiempos de carga rápidos y métricas web clave excepcionales para lograr el máximo impacto.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-full bg-indigo-950/50 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-8 float-icon" style="animation-delay: 1s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8l8 4 8-4-8-4-8 4zm0 8l8 4 8-4-8-4-8 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Sistemas UI modernos</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Sistemas de diseño elegantes, consistentes y escalables que refuerzan la identidad de marca.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-full bg-indigo-950/50 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-8 float-icon" style="animation-delay: 2s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Arquitectura responsiva</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Funcionalidad impecable en todos los dispositivos, desde pantallas de escritorio hasta teléfonos móviles.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 rounded-full bg-indigo-950/50 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-8 float-icon" style="animation-delay: 3s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Soluciones escalables</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Construidas pensando en el futuro, para que tu presencia digital pueda crecer junto con tu negocio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-16 max-w-2xl">
+                <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">CASOS DE ESTUDIO</span>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white">Proyectos destacados</h2>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="premium-card p-4 rounded-3xl group">
+                    <div class="aspect-[16/10] bg-neutral-900 border border-neutral-800 rounded-2xl mb-6 overflow-hidden relative">
+                        <div class="absolute inset-4 bg-indigo-950/20 rounded-xl border border-indigo-900 group-hover:scale-[1.02] transition-all duration-500 flex items-center justify-center">
+                            <span class="text-xs text-indigo-800 font-semibold">MAQUETA DE PÁGINA DE ATERRIZAJE</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">HTML</span>
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">Tailwind CSS</span>
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">JavaScript</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-white mb-3 tracking-tight">Página de aterrizaje para producto SaaS</h3>
+                        <p class="text-neutral-400 text-sm mb-6">Página de aterrizaje optimizada para una startup SaaS B2B, enfocada en impulsar conversiones de usuarios.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-indigo-400 transition">
+                            Ver proyecto en vivo
+                            <svg class="group-hover:translate-x-1 transition-transform" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11V1H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="premium-card p-4 rounded-3xl group">
+                    <div class="aspect-[16/10] bg-neutral-900 border border-neutral-800 rounded-2xl mb-6 overflow-hidden relative">
+                        <div class="absolute inset-4 bg-indigo-950/20 rounded-xl border border-indigo-900 group-hover:scale-[1.02] transition-all duration-500 flex items-center justify-center">
+                             <span class="text-xs text-indigo-800 font-semibold">MAQUETA DE SITIO WEB PARA RESTAURANTE</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">Responsivo</span>
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">SEO</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-white mb-3 tracking-tight">Sitio web para restaurante premium</h3>
+                        <p class="text-neutral-400 text-sm mb-6">Presentación del menú y el ambiente de un restaurante local, con integración de un sistema externo de reservas.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-indigo-400 transition">
+                            Ver proyecto en vivo
+                            <svg class="group-hover:translate-x-1 transition-transform" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11V1H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="premium-card p-4 rounded-3xl group">
+                    <div class="aspect-[16/10] bg-neutral-900 border border-neutral-800 rounded-2xl mb-6 overflow-hidden relative">
+                        <div class="absolute inset-4 bg-indigo-950/20 rounded-xl border border-indigo-900 group-hover:scale-[1.02] transition-all duration-500 flex items-center justify-center">
+                            <span class="text-xs text-indigo-800 font-semibold">MAQUETA DE SITIO WEB CORPORATIVO</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">Empresarial</span>
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">Diseño de sistemas</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-white mb-3 tracking-tight">Sitio web corporativo internacional</h3>
+                        <p class="text-neutral-400 text-sm mb-6">Desarrollo completo de sitio web para una firma multinacional de logística con soporte multilenguaje.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-indigo-400 transition">
+                            Ver proyecto en vivo
+                            <svg class="group-hover:translate-x-1 transition-transform" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11V1H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="premium-card p-4 rounded-3xl group">
+                    <div class="aspect-[16/10] bg-neutral-900 border border-neutral-800 rounded-2xl mb-6 overflow-hidden relative">
+                        <div class="absolute inset-4 bg-indigo-950/20 rounded-xl border border-indigo-900 group-hover:scale-[1.02] transition-all duration-500 flex items-center justify-center">
+                            <span class="text-xs text-indigo-800 font-semibold">MAQUETA DE CONCEPTO UI</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">Concepto</span>
+                            <span class="text-xs text-neutral-500 font-medium px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800">UI/UX</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-white mb-3 tracking-tight">Concepto UI para app FinTech</h3>
+                        <p class="text-neutral-400 text-sm mb-6">Sistema UI moderno para el concepto de una aplicación móvil de seguimiento financiero.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:text-indigo-400 transition">
+                            Ver caso de estudio UI
+                            <svg class="group-hover:translate-x-1 transition-transform" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11V1H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-16 text-center max-w-xl mx-auto">
+                <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">COMPETENCIAS CLAVE</span>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white">Cómo puedo ayudarte a crecer</h2>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="premium-card p-8 rounded-2xl text-center group">
+                     <div class="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-8 mx-auto float-icon group-hover:border-indigo-800 group-hover:bg-indigo-950 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1h22v18H1V1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 19v4M8 23h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Páginas de aterrizaje</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Páginas de alta conversión diseñadas para presentar tus productos y captar clientes potenciales de forma efectiva.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl text-center group">
+                     <div class="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-8 mx-auto float-icon group-hover:border-indigo-800 group-hover:bg-indigo-950 transition-colors" style="animation-delay: 1s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1v22M1 12h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Sitios web corporativos</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Presencias digitales profesionales construidas sobre arquitecturas modernas para apoyar objetivos empresariales.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl text-center group">
+                     <div class="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-8 mx-auto float-icon group-hover:border-indigo-800 group-hover:bg-indigo-950 transition-colors" style="animation-delay: 2s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1h16v16H1V1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 7l-6-6M23 17l-6-6M7 23l6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Diseño UI</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Sistemas de interfaz modernos e intuitivos diseñados para ofrecer una experiencia de usuario excepcional.</p>
+                </div>
+                <div class="premium-card p-8 rounded-2xl text-center group">
+                     <div class="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-8 mx-auto float-icon group-hover:border-indigo-800 group-hover:bg-indigo-950 transition-colors" style="animation-delay: 3s">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l3 10 3-10L1 1zm8 0h6v10H9V1zm8 0h6L20 11h-6V1zm-4 10v4l2 3v4-7zM2 13v10M22 13v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-4 tracking-tight">Soluciones de comercio electrónico</h3>
+                    <p class="text-neutral-400 text-sm leading-relaxed">Plataformas de tienda en línea escalables, optimizadas para rendimiento y crecimiento de ventas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 px-6 reveal bg-premium-bg">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-8">
+                     <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">PROFESIONAL INDEPENDIENTE</span>
+                    <p class="text-2xl md:text-3xl font-medium text-white mb-10 leading-snug tracking-tight">
+                        Soy Luis, desarrollador web independiente enfocado en crear experiencias digitales premium que combinan rendimiento, escalabilidad y diseño moderno.
+                    </p>
+                    <p class="text-neutral-400 leading-relaxed max-w-2xl text-sm">
+                        Creo en una filosofía centrada en el rendimiento, usando prácticas de desarrollo limpias y estructuras mantenibles para entregar experiencias de usuario alineadas con los objetivos del negocio. Mi enfoque está en soluciones orientadas a resultados que aportan valor a largo plazo.
+                    </p>
+                </div>
+                <div class="md:col-span-4 relative flex items-center justify-center">
+                    <div class="w-128 h-128 absolute -right-64 bg-indigo-950/20 rounded-full blur-[100px] z-0"></div>
+                    <div class="w-full aspect-square max-w-[300px] bg-neutral-900 border border-neutral-800 rounded-3xl relative z-10 p-6 flex flex-col justify-end group">
+                        <div class="w-12 h-12 rounded-full bg-indigo-950/50 border border-indigo-800 flex items-center justify-center text-indigo-400 mb-6 float-icon">
+                            L
+                        </div>
+                        <p class="text-white font-semibold">Luis Dev</p>
+                        <p class="text-neutral-500 text-sm">Desarrollador web independiente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto text-center">
+             <header class="mb-16">
+                <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">ECOSISTEMA TECNOLÓGICO</span>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white">Herramientas digitales</h2>
+            </header>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">HTML5</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">CSS3</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">JavaScript</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">Tailwind CSS</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">Diseño responsivo</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">Sistemas UI</div>
+                <div class="premium-card p-5 rounded-lg text-sm text-neutral-300 font-medium">Opt. rendimiento</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 px-6 reveal overflow-hidden relative">
+        <div class="mesh-background" style="opacity: 0.3; animation-duration: 20s"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 border border-neutral-800 p-16 rounded-3xl bg-neutral-950/50 backdrop-blur-xl">
+             <header class="mb-12">
+                <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">HABLEMOS</span>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 animated-text-gradient leading-tight">Construyamos algo excepcional.</h2>
+                <p class="text-lg text-neutral-400 font-medium max-w-xl mx-auto leading-relaxed">Listo para elevar tu presencia digital? Actualmente estoy disponible para nuevos proyectos y colaboraciones.</p>
+            </header>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                 <a href="https://wa.me/+573024320955" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 text-base font-semibold px-10 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition transform hover:-translate-y-0.5">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.01 2.01C6.48 2.01 2 6.48 2 12.01c0 2.21.72 4.25 1.94 5.92L2.5 22.5l4.72-1.42c1.46.74 3.1 1.15 4.8 1.15 5.53 0 10-4.47 10-10C22.01 6.48 17.54 2.01 12.01 2.01zm5.11 13.91c-.2.56-.99 1.05-1.55 1.16-.56.12-1.31.25-3.81-.78-2.6-1.07-4.25-3.7-4.38-3.86-.12-.17-1.01-1.34-1.01-2.56.01-1.22.65-1.81.89-2.07.24-.26.5-.33.67-.33.16 0 .33.01.48.01.16.01.37-.06.58.45.22.51.75 1.83.82 1.97.07.14.11.31.02.5-.09.19-.13.31-.26.47-.13.16-.29.35-.41.47-.13.13-.27.28-.11.55.15.27.69 1.14 1.48 1.84.97.87 1.8.14 2.07.3.27.16.44.1.61-.09.17-.19.74-.86.94-1.15.2-.29.41-.24.69-.14.28.1.81.39.81.39.28.14 1.86.87 2.14 1.01.28.14.47.21.54.33.07.12.07.72-.14 1.28z"/></svg>
+                    WhatsApp
+                </a>
+                 <a href="https://instagram.com/lmx.dev" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 text-base font-semibold px-8 py-4 rounded-xl border border-neutral-700 hover:border-neutral-500 text-white transition group">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-500 group-hover:text-white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 bg-premium-bg border-t border-neutral-900">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <a href="#" class="text-xl font-bold text-white flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                LMX
+            </a>
+            <div class="text-sm text-neutral-600">
+                &copy; 2025 LMX. Todos los derechos reservados. Experiencias digitales premium.
+            </div>
+            <div class="flex items-center gap-6">
+                 <a href="https://wa.me/+573024320955" target="_blank" rel="noopener noreferrer" class="text-sm text-neutral-500 hover:text-white transition">WA</a>
+                 <a href="https://instagram.com/lmx.dev" target="_blank" rel="noopener noreferrer" class="text-sm text-neutral-500 hover:text-white transition">IG</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 80; // Margen en px desde la parte inferior del viewport
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Ejecuta una vez al cargar para mostrar elementos ya visibles
+        revealOnScroll();
+    </script>
+</body>
+</html>
