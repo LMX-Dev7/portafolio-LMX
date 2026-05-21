@@ -116,6 +116,14 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 40px -10px rgba(79, 70, 229, 0.2);
         }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+        .mesh-background {
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased">
@@ -346,7 +354,7 @@
                     </p>
                 </div>
                 <div class="md:col-span-4 relative flex items-center justify-center">
-                    <div class="w-128 h-128 absolute -right-64 bg-indigo-950/20 rounded-full blur-[100px] z-0"></div>
+                    <div class="absolute inset-0 bg-indigo-950/20 rounded-full blur-[100px] z-0"></div>
                     <div class="w-full aspect-square max-w-[300px] bg-neutral-900 border border-neutral-800 rounded-3xl relative z-10 p-6 flex flex-col justify-end group">
                         <img src="assets/img/perfil.jpg" alt="Luis Dev" class="w-12 h-12 rounded-full object-cover border border-indigo-800 mb-6 float-icon">
                         <p class="text-white font-semibold">Luis Dev</p>
@@ -378,7 +386,7 @@
 
     <section id="contact" class="py-32 px-6 reveal overflow-hidden relative">
         <div class="mesh-background" style="opacity: 0.3; animation-duration: 20s"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10 border border-neutral-800 p-16 rounded-3xl bg-neutral-950/50 backdrop-blur-xl">
+        <div class="w-full max-w-4xl mx-auto text-center relative z-10 border border-neutral-800 p-6 sm:p-16 rounded-3xl bg-neutral-950/50 backdrop-blur-xl overflow-hidden">
              <header class="mb-12">
                 <span class="text-sm font-semibold text-indigo-400 tracking-wider mb-3 block">HABLEMOS</span>
                 <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 animated-text-gradient leading-tight">Construyamos algo excepcional.</h2>
